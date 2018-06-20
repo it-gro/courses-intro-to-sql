@@ -625,6 +625,53 @@ Ex().test_correct(check_result(), [
     test_error()
 ])
 ```
+***
+
+```yaml
+type: NormalExercise
+key: f0ade213ff
+xp: 30
+```
+
+`@instructions`
+Get the names and birthdates of people ordered by name and birth date.
+`@solution`
+```{sql}
+SELECT name, birthdate
+FROM people
+ORDER BY name, birthdate;
+```
+`@hint`
+```
+SELECT ___, ___
+FROM ___
+ORDER BY ___, ___;
+```
+`@sct`
+```{python}
+sel = check_node('SelectStmt')
+
+name = test_column('name', msg='Did you select the `name` column correctly?')
+
+birthdate = test_column('birthdate', msg='Did you select the `birthdate` column correctly?')
+
+from_clause = sel.check_field('from_clause')
+
+where_clause = sel.check_field('where_clause').has_equal_ast('Is your `WHERE` clause correct?')
+
+order_by_clause = sel.check_field('order_by_clause').has_equal_ast('Is your `ORDER BY` clause correct?')
+
+Ex().test_correct(check_result(), [
+    order_by_clause,
+    from_clause,
+    name,
+    birthdate,
+    test_has_columns(),
+    test_ncols(),
+    test_error()
+])
+```
+
 
 ***
 
@@ -719,53 +766,6 @@ Ex().test_correct(check_result(), [
     certification,
     release_year,
     title,
-    test_has_columns(),
-    test_ncols(),
-    test_error()
-])
-```
-
-***
-
-```yaml
-type: NormalExercise
-key: f0ade213ff
-xp: 30
-```
-
-`@instructions`
-Get the names and birthdates of people ordered by name and birth date.
-`@solution`
-```{sql}
-SELECT name, birthdate
-FROM people
-ORDER BY name, birthdate;
-```
-`@hint`
-```
-SELECT ___, ___
-FROM ___
-ORDER BY ___, ___;
-```
-`@sct`
-```{python}
-sel = check_node('SelectStmt')
-
-name = test_column('name', msg='Did you select the `name` column correctly?')
-
-birthdate = test_column('birthdate', msg='Did you select the `birthdate` column correctly?')
-
-from_clause = sel.check_field('from_clause')
-
-where_clause = sel.check_field('where_clause').has_equal_ast('Is your `WHERE` clause correct?')
-
-order_by_clause = sel.check_field('order_by_clause').has_equal_ast('Is your `ORDER BY` clause correct?')
-
-Ex().test_correct(check_result(), [
-    order_by_clause,
-    from_clause,
-    name,
-    birthdate,
     test_has_columns(),
     test_ncols(),
     test_error()
